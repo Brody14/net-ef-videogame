@@ -27,7 +27,7 @@ namespace net_ef_videogame
             - 2: Ricerca un videogame per id
             - 3: Ricerca tutti i videogiochi che contengono nel nome un tuo input
             - 4: Cancella un videogioco
-            - 5: Chiudi il programma
+            - 5: Chiudi il programma 
             ");
 
                 Console.Write("Seleziona l'opzione --> ");
@@ -116,23 +116,35 @@ namespace net_ef_videogame
 
                         break;
 
-                    //case 3:
-                    //    {
+                    case 3:
+                        {
 
-                    //        Console.Write("Inserisci la parola che vuoi cercare all'interno del nome del videogioco: ");
-                    //        string input = Console.ReadLine();
-                    //        List<Videogame> videogames = VideogameManager.GetVideogameByInput(input);
+                            Console.Write("Inserisci la parola che vuoi cercare all'interno del nome del videogioco: ");
+                            string input = Console.ReadLine();
 
-                    //        if (videogames.Count > 0)
-                    //        {
-                    //            foreach (Videogame vid in videogames)
-                    //            {
-                    //                Console.WriteLine(vid);
-                    //            }
-                    //        }
+                            using (VideogameContext db = new VideogameContext())
+                            {
+                                try
+                                {
+                                    List<Videogame> videogames = db.Videogames.Where(videogame => videogame.Name.Contains(input)).ToList<Videogame>();
 
-                    //    }
-                    //    break;
+                                    if (videogames.Count > 0)
+                                    {
+                                        foreach (Videogame vid in videogames)
+                                        {
+                                            Console.WriteLine(vid);
+                                        }
+                                    }
+
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
+                            }
+
+                        }
+                        break;
 
                     //case 4:
                     //    {
@@ -163,6 +175,7 @@ namespace net_ef_videogame
                         {
                             Console.WriteLine("Non hai selezionato un opzione valida!");
                         }
+
                         break;
                 }
             }
