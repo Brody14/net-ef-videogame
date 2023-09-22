@@ -28,7 +28,8 @@ namespace net_ef_videogame
             - 3: Ricerca tutti i videogiochi che contengono nel nome un tuo input
             - 4: Cancella un videogioco
             - 5: Aggiungi una software house
-            - 6: Chiudi il programma 
+            - 6: Visualizza tutti i videogiochi prodotti da una software house
+            - 7: Chiudi il programma 
             ");
 
                 Console.Write("Seleziona l'opzione --> ");
@@ -214,6 +215,55 @@ namespace net_ef_videogame
                         break;
 
                     case 6:
+                        {
+                            using (VideogameContext db = new VideogameContext())
+                            {
+                                List<SoftwareHouse> softwareHouses = db.SoftwareHouses.ToList();
+
+                                Console.WriteLine("Ecco le software house presenti:");
+
+                                foreach (SoftwareHouse s in softwareHouses)
+                                {
+                                    Console.WriteLine(s);
+                                }
+
+                                Console.WriteLine();
+                                Console.Write("Inserisci l'id della Software House di cui vuoi visualizzare i videogame: ");
+                                int softwareHouseId = int.Parse(Console.ReadLine());
+                            
+                                try
+                                {
+
+                                    SoftwareHouse softwareHouse = db.SoftwareHouses.Where(softwareHouse => softwareHouse.SoftwareHouseId == softwareHouseId).First();
+                                    
+                                    List<Videogame> videogames = db.Videogames.Where(videogames => videogames.SoftwareHouseId == softwareHouseId).ToList<Videogame>();
+
+                                    if (videogames.Count > 0)
+                                    {
+                                        Console.WriteLine($"Ecco la lista dei videogiochi che appartengono alla {softwareHouse.Name}");
+                                       
+                                        foreach (Videogame vid in videogames)
+                                        {
+                                            Console.WriteLine(vid);
+                                            
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine($"La {softwareHouse.Name} non ha prodotto videogiochi");
+                                    }
+
+                                } catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
+                            }
+
+                        }
+                        break;
+                
+
+                    case 7:
                         {
                             Environment.Exit(0);
                         }

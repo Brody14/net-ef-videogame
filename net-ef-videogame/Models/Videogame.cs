@@ -27,10 +27,6 @@ Data di rilascio: {Release_date.ToString("dd/MM/yyyy")}";
             if(SoftwareHouse != null)
             {
                 result += $@"
-ID: {VideogameId} 
-Nome videogame: {Name}
-Trama: {Overview}
-Data di rilascio: {Release_date.ToString("dd/MM/yyyy")}
 Software House: {SoftwareHouse.Name}";
             }
 
