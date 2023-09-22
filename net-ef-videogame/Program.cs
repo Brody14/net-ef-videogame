@@ -146,25 +146,30 @@ namespace net_ef_videogame
                         }
                         break;
 
-                    //case 4:
-                    //    {
-                    //        Console.Write("Inserisci l'ID del videogioco che vuoi cancellare: ");
-                    //        long idToDelete = long.Parse(Console.ReadLine());
+                    case 4:
+                        {
+                            Console.Write("Inserisci l'ID del videogioco che vuoi cancellare: ");
+                            int idToDelete = int.Parse(Console.ReadLine());
 
-                    //        bool deleted = VideogameManager.DeleteVideogame(idToDelete);
+                            using (VideogameContext db = new VideogameContext())
+                            {
+                                try
+                                {
+                                    Videogame videogame = db.Videogames.Where(videogame => videogame.VideogameId == idToDelete).First();
 
-                    //        if (deleted)
-                    //        {
-                    //            Console.WriteLine($"Il videogioco con ID {idToDelete} è stato cancellato");
-                    //        }
-                    //        else
-                    //        {
-                    //            Console.WriteLine($"Il videogioco con ID {idToDelete} non è stato cancellato");
-                    //        }
+                                    db.Remove(videogame);
+                                    db.SaveChanges();
 
+                                    Console.WriteLine($"Il videogioco con ID {idToDelete} è stato cancellato");
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
+                            }
+                        }
 
-                    //    }
-                    //    break;
+                        break;
 
                     case 5:
                         {
