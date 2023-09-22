@@ -27,7 +27,8 @@ namespace net_ef_videogame
             - 2: Ricerca un videogame per id
             - 3: Ricerca tutti i videogiochi che contengono nel nome un tuo input
             - 4: Cancella un videogioco
-            - 5: Chiudi il programma 
+            - 5: Aggiungi una software house
+            - 6: Chiudi il programma 
             ");
 
                 Console.Write("Seleziona l'opzione --> ");
@@ -173,9 +174,51 @@ namespace net_ef_videogame
 
                     case 5:
                         {
+                            Console.WriteLine("Inserisci i dati della software house!");
+                            Console.Write("Inserisci il nome: ");
+                            string name = Console.ReadLine();
+
+                            Console.Write("Inserisci la partita iva: ");
+                            string vatNumber = Console.ReadLine();
+
+                            Console.Write("Inserisci la città: ");
+                            string city = Console.ReadLine();
+
+                            Console.Write("Inserisci la nazione: ");
+                            string country = Console.ReadLine();
+
+                            SoftwareHouse newSoftwareHouse = new SoftwareHouse()
+                            {
+                                Name = name,
+                                VatNumber = vatNumber,
+                                City = city,
+                                Country = country
+                            };
+
+
+                            using (VideogameContext db = new VideogameContext())
+                            {
+                                try
+                                {
+                                    db.Add(newSoftwareHouse);
+                                    db.SaveChanges();
+
+                                    Console.WriteLine("La Software House è stata aggiunta!");
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
+                            }
+                        }
+                        break;
+
+                    case 6:
+                        {
                             Environment.Exit(0);
                         }
                         break;
+                           
                     default:
                         {
                             Console.WriteLine("Non hai selezionato un opzione valida!");
