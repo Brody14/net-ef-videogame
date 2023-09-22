@@ -1,5 +1,7 @@
 ﻿using net_ef_videogame.Database;
 using net_ef_videogame.Models;
+using System.Linq;
+using System;
 
 namespace net_ef_videogame
 {
@@ -92,22 +94,27 @@ namespace net_ef_videogame
 
                         break;
 
-                    //case 2:
-                    //    {
-                    //        try
-                    //        {
-                    //            Console.Write("Inserisci l'ID del videogioco che vuoi cercare: ");
-                    //            long idSearched = long.Parse(Console.ReadLine());
-                    //            VideogameManager.GetVideogameById(idSearched);
-                    //        }
-                    //        catch (Exception ex)
-                    //        {
-                    //            Console.WriteLine(ex.Message);
-                    //        }
+                    case 2:
+                        {
+                            
+                            Console.Write("Inserisci l'ID del videogioco che vuoi cercare: ");
+                            int idSearched = int.Parse(Console.ReadLine());
 
-                    //    }
+                            using (VideogameContext db = new VideogameContext())
+                            {
+                                try
+                                {
+                                    Videogame videogame = db.Videogames.Where(videogame => videogame.VideogameId == idSearched).First();
 
-                    //    break;
+                                    Console.WriteLine(videogame);
+                                }catch(Exception ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }  
+                            }
+                        }
+
+                        break;
 
                     //case 3:
                     //    {
